@@ -1,0 +1,86 @@
+/*
+================================================================================
+General
+================================================================================
+*/
+
+body {
+    color: #e6e6e6;
+	background-color: #333333;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
+
+/*
+================================================================================
+Block: grid
+================================================================================
+*/
+
+.grid {
+    max-width: 1200;
+}
+
+.grid__screen-progress {
+    padding: 5px; /*so content doesn't touch the edge of the tile*/
+    margin-top: 10px; /* this needs to be in agreement with gutter size to have uniform gutters top-bottom like left-right */
+    margin-bottom: 10px; /* this needs to be in agreement with gutter size to have uniform gutters top-bottom like left-right */
+    text-align: center;
+    font-size: x-large;
+}
+
+/*
+================================================================================
+Block: custom-button
+================================================================================
+*/
+
+.custom-button{
+    width: 100%;
+    border-radius: 10px;
+    padding: 5px; /*so content doesn't touch the edge of the tile*/
+    margin-top: 10px; /* this needs to be in agreement with gutter size to have uniform gutters top-bottom like left-right */
+    margin-bottom: 10px; /* this needs to be in agreement with gutter size to have uniform gutters top-bottom like left-right */
+
+    /* For Safari 3.1 to 6.0 */
+    -webkit-transition-duration: .3s;
+    /* Standard syntax */
+    transition-duration: .3s;
+    border-style: solid;
+    border-width: thin;
+    text-align: center;
+    font-size: x-large;
+}
+
+.custom-button_disabled {
+    background: #292929;
+    border-color: #404040;
+    color: #404040;
+}
+.custom-button_disabled:hover {
+    cursor: default;
+}
+
+.custom-button_enabled {
+    background: #404040;
+    border-color: #00CCFF;
+    box-shadow: 5px 10px 10px #101010;
+}
+
+.custom-button_enabled:hover {
+    background: #404040;
+    border-color: #FFD119;
+    cursor: pointer;
+}
