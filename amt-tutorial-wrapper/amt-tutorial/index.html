@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8'>
+    <title>Website Tutorial</title>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.12.1.min.js"></script>
+    <!-- Bootstrap -->
+    <link rel='stylesheet' href='css/bootstrap.css' type='text/css'>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <!-- BEGIN NEW CODE -->
+    <!-- QueryString -->
+    <script type="text/javascript" src="js/querystring.js"></script>
+    <!-- END NEW CODE -->
+    <!-- Custom files -->
+    <script type="text/javascript" src="js/AppController.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+    <link rel='stylesheet' href='css/general.css' type='text/css'>
+</head>
+
+<body>
+
+    <!-- If client browser does not have Javascript enabled, display the following message -->
+    <noscript>
+        <h1>Warning: Javascript seems to be disabled</h1>
+        <p>This website requires that Javascript be enabled on your browser.</p>
+        <p>Instructions for enabling Javascript in your browser can be found <a href="http://support.google.com/bin/answer.py?hl=en&answer=23852">here</a></p>
+    </noscript>
+
+    <div class="container begin-content">
+        <div class="row">
+            <div class="col-xs-4 col-md-4"></div>
+            <div class="col-xs-4 col-md-4">
+                <h1>Instructions</h1>
+                <p>Click the button that corresponds to the letter shown.</p>
+            </div>
+            <div class="col-xs-4 col-md-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-md-4"></div>
+            <div class="col-xs-4 col-md-4">
+                <div id="next-button" class='custom-button custom-button_enabled'>
+                    Next
+                </div>
+            </div>
+            <div class="col-xs-4 col-md-4"></div>
+        </div>
+    </div>
+
+    <div class="container trial-content">
+        <div class="row">
+            <div class="col-xs-4 col-md-4"></div>
+            <div class="col-xs-4 col-md-4">
+                <div id="trial-content__stimulus"></div>
+            </div>
+            <div class="col-xs-4 col-md-4"></div>
+        </div>
+         <div class="row">
+             <div class="col-xs-4 col-md-4"></div>
+             <div class="col-xs-4 col-md-4">
+                 <div class="col-xs-6 col-md-6">
+                     <div class='trial-content__submit-button custom-button custom-button_enabled' data-submit-button='A'>
+                         A
+                     </div>
+                 </div>
+                 <div class="col-xs-6 col-md-6">
+                     <div class='trial-content__submit-button custom-button custom-button_enabled' data-submit-button='B'>
+                         B
+                     </div>
+                 </div>
+             </div>
+             <div class="col-xs-4 col-md-4">
+                 <div class='trial-content__screen-progress'>
+                     Completed: <span id='trial-content__progress-counter'>0</span> / <span class='total-number-screens'>10</span>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- BEGIN NEW CODE -->
+    <div class="container submit-content">
+        <div class="row">
+            <div class="col-xs-4 col-md-4"></div>
+            <div class="col-xs-4 col-md-4">
+                <h1>Thank You!</h1>
+                <p>Thank you for completing the experiment.</p>
+            </div>
+            <div class="col-xs-4 col-md-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4 col-md-4"></div>
+            <div class="col-xs-4 col-md-4">
+                <div id="submit-button" class="custom-button custom-button_enabled">
+                    Submit
+                </div>
+            </div>
+            <div class="col-xs-4 col-md-4"></div>
+        </div>
+    </div>
+    <!-- END NEW CODE -->
+
+    <div class="container end-content">
+        <div class="row">
+            <div class="col-xs-4 col-md-4"></div>
+            <div class="col-xs-4 col-md-4">
+                <h1>Thank You!</h1>
+                <p>Thank you for completing the experiment. You may now close the browser tab.</p>
+            </div>
+            <div class="col-xs-4 col-md-4"></div>
+        </div>
+    </div>
+
+    <!-- BEGIN NEW CODE -->
+    <form id="mturk_form" method="POST">
+        <input type="hidden" id="assignmentId" name="assignmentId" value="">
+        <input type="hidden" id="workerId" name="workerId" value="">
+        <input type="hidden" id="hitId" name="hitId" value="">
+    </form>
+    <!-- END NEW CODE -->
+
+    <script type="text/javascript">
+        var appController;
+        $(window).load(function() {
+
+            // Load configuration file from server
+            $.post('./cgi-bin/get_config.py', {
+                // TODO BEGIN NEW CODE
+                // // Grab info from url
+                // 'workerId' : $.QueryString["workerId"],
+                // 'assignmentId' : $.QueryString["assignmentId"],
+                // 'hitId' : $.QueryString["hitId"]
+                // END NEW CODE
+            }).done( function( cfg ) {
+                // Get details of client's system
+                var userSystemInfo = Get_User_System_Info();
+                var currentStatus = 'started';
+                var beginHit = new Date().getTime();
+
+                // BEGIN NEW CODE
+                // M Turk Info
+                cfg.workerId = $.QueryString["workerId"];
+                cfg.assignmentId = $.QueryString["assignmentId"];
+                cfg.hitId = $.QueryString["hitId"];
+
+                // Fill in backup form
+                $("#hitId").val($.QueryString['hitId']);
+                $("#assignmentId").val($.QueryString['assignmentId']);
+                $("#workerId").val($.QueryString['workerId']);
+                $("#mturk_form").attr('action', cfg['submitUrl']);
+
+                // Create dictionary on variables to send to server
+                // For now, we don't know the mechanical turk information
+                var dataToPost = {
+                    website: cfg.website,
+                    mTurkAssignmentId: cfg.assignmentId,
+                    mTurkWorkerId: cfg.workerId,
+                    mTurkHitId: cfg.hitId,
+                    browser: userSystemInfo.browserName,
+                    platform: userSystemInfo.userPlatform,
+                    language: userSystemInfo.browserLanguage,
+                    codeVersion: cfg.codeVersion,
+                    beginHit: String(beginHit),
+                    status: currentStatus
+                };
+
+                if (dataToPost.mTurkWorkerId == undefined) {
+                    dataToPost.mTurkWorkerId = 'undefined';
+                    dataToPost.mTurkAssignmentId = 'undefined';
+                    dataToPost.mTurkHitId = 'undefined';
+                    cfg.mode = 'nonTurk';
+                } else {
+                    cfg.mode = 'turkExp';
+                }
+                // END NEW CODE
+
+                if (cfg.doRecord) {
+                    // Create assignment entry in database
+                    $.post("php/initialize-assignment.php", dataToPost, function(dbAssignmentId) {
+                        cfg.dbAssignmentId = parseInt(dbAssignmentId, 10);
+                        Console_Debug(cfg.debugOn, "Recorded new assignment entry: " + cfg.dbAssignmentId);
+                        // Initiaize AppController
+                        appController = new AppController(cfg);
+                    }).fail( function () {
+                        Console_Debug(cfg.debugOn, "Failed to create new assignment entry in database.");
+                    }); // end post
+                } else {
+                    cfg.dbAssignmentId = -1;
+                    // Initiaize AppController
+                    appController = new AppController(cfg);
+                } // end if
+
+            }, 'json').fail( function (xhr, status, error) {
+                console.log(status);
+                console.log(error);
+            }); // end post
+        }); // end load
+    </script>
+
+</body>
+
+</html>
