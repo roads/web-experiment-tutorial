@@ -16,7 +16,7 @@ In the configuration file, we have added an additional variable `doRecord`, whic
 
 ### The mySQL Database
 
-A database has already been created for this tutorial. To login to the mySQL database, first login to the server and then execute the following command:
+A database may need to be created for you by your server admin. To login to the mySQL database, first login to the server and then execute the following command:
 ```script
 mysql -u yourusername -p
 ```
@@ -43,7 +43,7 @@ To see everything that is currently stored in the `assignment` table, enter the 
 ```sql
 SELECT * FROM assignment;
 ```
-Unless the database was recently purged, you should see data entries. For more complicated queries, do a web search for SQL query syntax.
+Unless the database was recently created or purged, you should see data entries. For more complicated queries, do a web search for SQL query syntax.
 
 Relational databases such as mySQL are organized in order to minimize redundancy of stored information. To help explain this concept, consider a bad way to store information. On each trial, we could store information about the user, the trial, and their response in one massive table. However, information about the user doesn't change across the experiment, so we would be storing the same information over and over again. Alternatively, we can use the relational approach and define two tables. The first table stores information about the user (`assignment`) and the second table stores information about each trial (`trial`). The tables are linked up in such a way that particular entries in the `trial` table correspond to particular entries in the `assignment` table. In other words, we reduce redundancy by defining relationships between the different table. Now user information is only stored once, reducing redundancy.
 
@@ -107,7 +107,9 @@ If you would like to create your own version of this website to play around with
 4. Modify the `_v0.config.py` configuration file.
   * Change the user name (e.g., `username = 'yourusername'`
   * Change the password to the appropriate password (e.g. `password = ‘yourpassword’`)
+  * Change the ipaddr to the appropriate IP address of your server
   * Change the website name (e.g., `website = ‘yourusername-db-tutorial’`)
+  * Change the htdocsUrl to the actual URL of your server. AMT requires https to run external HITS.
 5. Modify `DatabaseConfiguration.php`
   * Change the mysql username (e.g., `$this->username = "yourMysqlUsername";`);
   * Change the mysql password (e.g., ` $this->password = “yourMysqlPassword”;`)

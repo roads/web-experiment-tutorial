@@ -6,10 +6,6 @@
  website](bdroads.com)
 * **Mohammad Khajah** - *Code contributor.*
 
-## Current Admin(s)
-* **Adam Winchell** - adwi8859@colorado.edu
-* **Brett D. Roads** - brett.roads@colorado.edu
-
 ## Introduction
 The following tutorial is designed to help you deploy an online web experiment on Amazon Mechanical Turk (AMT). The tutorial is organized into four parts. Each part builds upon the previous part.
 1. Website Construction `\website-tutorial-wrapper`
@@ -33,7 +29,7 @@ In order to complete this tutorial you will need the following:
 
 If your admin has not already provided you with these credentials, you should go ahead and request them. If you will not be deploying your experiment on AMT, you will not need AWS credentials.
 
-NOTE: If you will be running an actual experiment you *must* have prior IRB approval and current CITI certification (see: https://www.colorado.edu/researchinnovation/irb).
+NOTE: If you will be running an actual experiment you *must* have the appropriate approval from your institution (e.g., prior IRB approval and training certification).
 
 # License
 

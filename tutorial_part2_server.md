@@ -1,6 +1,6 @@
 ## Web Site Deployment
 
-In this part, we will cover the basics of deploying a website to a server and making it accessible to the outside world. Companion code for this part can be found in the directory `\server-tutorial-wrapper`. This part builds upon the companion website code from the previous part. To help you identify what has been added, new code will be marked using comments *BEGIN NEW CODE* and *END NEW CODE*. The remainder of this tutorial assumes that the server is configured using a LAMP stack and is written for the Mozer Lab server (i.e., https://www.mozerlab.us/).
+In this part, we will cover the basics of deploying a website to a server and making it accessible to the outside world. Companion code for this part can be found in the directory `\server-tutorial-wrapper`. This part builds upon the companion website code from the previous part. To help you identify what has been added, new code will be marked using comments *BEGIN NEW CODE* and *END NEW CODE*. The remainder of this tutorial assumes that the server is configured using a LAMP stack, although the code will likely require little modification for other server configurations.
 
 ### Signing into the Server
 In order to deploy the website to a server, you need server credentials (i.e, a username and password). Your admin should have provided you will these. In case you are interested, creating a new user is straightforward. An existing user with sudo privileges (i.e., your admin) issues the following commands on the server:
@@ -15,9 +15,9 @@ passwd
 
 Once you have a user account, you sign into the server from your local machine using a secure shell protocol (SSH). To sign in you issue the following command from a shell terminal on your local machine:
 ```shell
-ssh -p 22 user_name@159.203.207.54
+ssh -p 22 user_name@111.222.333.44
 ```
-The numbers at the end of the command indicate the IP address of the lab server. The `-p 22` indicates port 22. Upon issuing this command you should be prompted for your password. If your password is correct you will now be logged into the server. To exit the server type `exit`.
+The numbers at the end of the command indicate a hypothetical IP address of the server. The `-p 22` indicates port 22. Depending on your server configuration, you may need to use a different port. Upon issuing this command you should be prompted for your password. If your password is correct you will now be logged into the server. To exit the server type `exit`.
 
 ### Copying Files from a Local Machine to the Server
 In order for the server to host a website, the website files need to be moved to the appropriate location on the server. In our case, we want to move the directory containing our website to a standard server directory for hosting websites: `/var/www/html`. Since you were added to the the group `lab`, you have the appropriate access privileges to the directory `/var/www/html`. Since this is a shared directory, you will need to be careful that your directory name is not already being used by another user. If you are logged into the server, you can see which directory names are being used by listing them all.
@@ -33,7 +33,7 @@ python3 deploy_website.py v0
 The code should be executed after you have moved to the directory level where the directory `\web-tutorial` resides. The argument "v0" indicates that the web files are being uploaded using the configuration file `_v0.config.py`.
 
 ### Configuration File
-The configuration file is where we will store server credentials, AWS credentials, and experiment parameters. If you open `_v0.config.py` you will see three different sets of vairables. The first set of variables store server information and credentials (username, password, ipaddr, port), These are filled out with the same information that you would use for an SSH session. The second set of variables define the URL of the website (htdocsUrl) and indicate the location of the web files on the server (htdocsPath). Note that in this setup, the directory name of the website should be the same as the last part of the URL. The last set of variables is stored in the dictionary `expConfig`. The variable `expConfig' holds basic information basic information (`codeVersion`, `website`, `htdocsUrl`) as well as experiment paramters. For example, we have moved the variables `nScreen` and `debugOn` from being hard-coded in `index.html` to  `_v0.config.py`. An advantage of using configuration files is that you can parameterize your experiment and create different experiment versions using different configuration files.
+The configuration file is where we will store server credentials, AWS credentials, and experiment parameters. If you open `_v0.config.py` you will see three different sets of variables. The first set of variables store server information and credentials (username, password, ipaddr, port), These are filled out with the same information that you would use for an SSH session. The second set of variables define the URL of the website (htdocsUrl) and indicate the location of the web files on the server (htdocsPath). Note that in this setup, the directory name of the website should be the same as the last part of the URL. The last set of variables is stored in the dictionary `expConfig`. The variable `expConfig' holds basic information basic information (`codeVersion`, `website`, `htdocsUrl`) as well as experiment paramters. For example, we have moved the variables `nScreen` and `debugOn` from being hard-coded in `index.html` to  `_v0.config.py`. An advantage of using configuration files is that you can parameterize your experiment and create different experiment versions using different configuration files.
 
 The information contained in the configuration file is loaded by the server and provided to the webpage using Common Gateway Interface (CGI) scripts stored in the directory `cgi-bin`. The `index.html` file has been modified to load the configuration file.
 
@@ -47,7 +47,9 @@ If you would like to create your own version of this website to play around with
 4. Modify the `_v0.config.py` configuration file.
   * Change the user name (e.g., `username = 'yourusername'`
   * Change the password to the appropriate password (e.g. `password = ‘yourpassword’`)
+  * Change the ipaddr to the appropriate IP address of your server
   * Change the website name (e.g., `website = ‘yourusername-server-tutorial’`)
+  * Change the htdocsUrl to the actual URL of your server. AMT requires https to run external HITS.
 5. Deploy the website by running `python3 deploy_website.py v0` from a terminal on your local machine while within the wrapper directory (`\server-tutorial-wrapper`).
 6. If everything worked you should now be able to view the website at www.mozerlab.us/yourusername-server-tutorial.
 7. Modify the code as you see fit and redeploy.

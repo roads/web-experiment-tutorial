@@ -3,12 +3,12 @@ import os
 # Server Information
 username = '<serverusername>'
 password = '<serveruserpassword>'
-ipaddr = '159.203.207.54'
+ipaddr = '<ipadress>'
 port = 22
 
-# Website Information
+# Website Information<
 website = 'amt-tutorial'
-htdocsUrl = 'https://www.mozerlab.us/' + website
+htdocsUrl = 'https://www.yoururl.com/' + website
 htdocsPath = '/var/www/html/' + website
 
 # BEGIN NEW CODE

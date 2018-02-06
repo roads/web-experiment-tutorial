@@ -1,5 +1,5 @@
 ## AMT Configuration
-So far we have created a simple website hosted on a lab server that records participant data to mySQL database. The next step is to obtain participants for your experiment. One convenient platform for recruiting and paying participants is Amazon Mechanical Turk (AMT). This part of the tutorial will cover how the website we have created can be integrated with AMT. Companion code for this part can be found in the directory `\amt-tutorial-wrapper`. In order to integrate with AMT you will need Amazon Web Services (AWS) credentials (Access Key Id, Secret Access Key). These should be obtained from you admin.
+So far we have created a simple website hosted on a server that records participant data to mySQL database. The next step is to obtain participants for your experiment. One convenient platform for recruiting and paying participants is Amazon Mechanical Turk (AMT). This part of the tutorial will cover how the website we have created can be integrated with AMT. Companion code for this part can be found in the directory `\amt-tutorial-wrapper`. In order to integrate with AMT you will need Amazon Web Services (AWS) credentials (Access Key Id, Secret Access Key). These should be obtained from your admin or relevant supervisor.
 
 ### AMT Basics
 In order to understand the changes we need to make to our website, we first need to discuss a few facets of AMT. On AMT, *requesters* publish jobs that they would like AMT *workers* to complete. AMT refers to a job as a Human Intelligence Task (HIT). When a requester publishes a HIT, they specify how many workers they would like to complete the HIT. On AMT, this is referred to as the number of *assignments* requested for a HIT. For our purposes, we will create one assignment for every participant we want to run in our experiment. It should now be clear why we previously named the first mySQL table `assignment`.
@@ -80,7 +80,9 @@ If you would like to create your own version of this website to play around with
 4. Modify the `_v0.config.py` configuration file.
   * Change the user name (e.g., `username = 'yourusername'`
   * Change the password to the appropriate password (e.g. `password = ‘yourpassword’`)
+  * Change the ipaddr to the appropriate IP address of your server
   * Change the website name (e.g., `website = ‘yourusername-db-tutorial’`)
+  * Change the htdocsUrl to the actual URL of your server. AMT requires https to run external HITS.
   * Change the AWS access id `awsAccessId`.
   * Change the AWS secret key `awsSecretKey`.
 5. Modify `DatabaseConfiguration.php`
