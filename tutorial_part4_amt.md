@@ -108,9 +108,7 @@ Once you do that, you can now fire up an instance of python, and enter the follo
 >>>import boto3
 >>>client = boto3.client('mturk')
 ```
-The `boto3.client` command automatically retrieves your AWS credentials from the credentials file.
-
-Now that you have an appropriate instantiated client object, you can request useful information. For example you could list assignments for HIT ABC123XYZ:
+The `boto3.client` command automatically retrieves your AWS credentials from the credentials file and creates an convenient client object. Now that you have an appropriately instantiated client object, you can request useful information. For example you could list assignments for HIT ABC123XYZ:
 ```python
 >>>assignment_list = client.list_assignments_for_hit(HITId='ABC123XYZ')
 ```
