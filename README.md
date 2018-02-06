@@ -20,16 +20,20 @@ NOTE: The tutorial is designed to cover details pertinent to deploying a web exp
 
 ### Requirements
 In order to complete this tutorial you will need the following:
-1. Server Credentials
+1. Local Machine
+  * This tutorial assumes python scripts are executed using python 3.x. A handful of python libraries are imported for these scripts.
+2. Server
+  * This tutorial assumes a server configured with a LAMP stack and SSL certificate.
+3. Server Credentials
   * User account and password
   * Database account and password
-2. Amazon Web Services (AWS) Credentials
+4. Amazon Web Services (AWS) Credentials
   * Access Key ID
   * Secret Access Key
 
 If your admin has not already provided you with these credentials, you should go ahead and request them. If you will not be deploying your experiment on AMT, you will not need AWS credentials.
 
-NOTE: If you will be running an actual experiment you *must* have the appropriate approval from your institution (e.g., prior IRB approval and training certification).
+NOTE: If you will be running an actual experiment you *must* have the appropriate approval from your institution (e.g., prior IRB approval and human research certification).
 
 # License
 

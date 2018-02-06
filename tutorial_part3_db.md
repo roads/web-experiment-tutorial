@@ -113,6 +113,6 @@ If you would like to create your own version of this website to play around with
 5. Modify `DatabaseConfiguration.php`
   * Change the mysql username (e.g., `$this->username = "yourMysqlUsername";`);
   * Change the mysql password (e.g., ` $this->password = “yourMysqlPassword”;`)
-6. Deploy the website by running `python3 deploy_website.py v0` from a terminal on your local machine while within the wrapper directory (`\db-tutorial-wrapper`).
+6. Deploy the website by running `python deploy_website.py v0` from a terminal on your local machine while within the wrapper directory (`\db-tutorial-wrapper`).
 7. If everything worked you should now be able to view the website at www.mozerlab.us/yourusername-db-tutorial.
 8. Modify the code as you see fit and redeploy. If you want to try saving different data to a database, you will need to create your own database and update `$this->dbname = "your_new_db_name";` in `DatabaseConfiguration.php`.

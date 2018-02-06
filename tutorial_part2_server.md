@@ -28,7 +28,7 @@ ls
 
 When you are developing a website, you will modify web code on your local machine and copy it to the server. Since you will be making numerous changes to your code during development you will want to have a way to easily update the relevant web files on the server. This is accomplished using a handy python script `deploy_website.py`. When you have new files you would like to upload to the server (i.e., copy to `/var/www/html`) you execute the following code from a terminal on your local machine:
 ```shell
-python3 deploy_website.py v0
+python deploy_website.py v0
 ```
 The code should be executed after you have moved to the directory level where the directory `\web-tutorial` resides. The argument "v0" indicates that the web files are being uploaded using the configuration file `_v0.config.py`.
 
@@ -50,6 +50,6 @@ If you would like to create your own version of this website to play around with
   * Change the ipaddr to the appropriate IP address of your server
   * Change the website name (e.g., `website = ‘yourusername-server-tutorial’`)
   * Change the htdocsUrl to the actual URL of your server. AMT requires https to run external HITS.
-5. Deploy the website by running `python3 deploy_website.py v0` from a terminal on your local machine while within the wrapper directory (`\server-tutorial-wrapper`).
+5. Deploy the website by running `python deploy_website.py v0` from a terminal on your local machine while within the wrapper directory (`\server-tutorial-wrapper`).
 6. If everything worked you should now be able to view the website at www.mozerlab.us/yourusername-server-tutorial.
 7. Modify the code as you see fit and redeploy.

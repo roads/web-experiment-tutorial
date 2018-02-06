@@ -1,4 +1,4 @@
-# Example usage: python3 deploy_website.py birds-16
+# Example usage: python3 deploy_website.py my_config_file_name
 from __future__ import division
 import os
 import sys

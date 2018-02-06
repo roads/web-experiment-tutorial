@@ -52,7 +52,7 @@ The `submitUrl` and `expTimeMin` are included in the dictionary variable `expCon
 ### Creating a HIT
 Using the python script `create_hit.py`, a HIT is created similar to the way we deploy a website. To create a HIT, first make sure you have copied the latest version of the experiment to the server using `deploy_website.py'. Then execute the following command from the same directory level as `create_hit.py`:
 ```shell
-python3 create_hit.py v0
+python create_hit.py v0
 ```
 
 In short, `create_hit.py` loads the specified configuration file and publishes a HIT on AMT (live or sandbox depending on the configuration file). The configuration file specifies `turkserv.py` as the first page to show to workers.
@@ -88,18 +88,34 @@ If you would like to create your own version of this website to play around with
 5. Modify `DatabaseConfiguration.php`
   * Change the mysql username (e.g., `$this->username = "yourMysqlUsername";`);
   * Change the mysql password (e.g., ` $this->password = “yourMysqlPassword”;`)
-6. Deploy the website by running `python3 deploy_website.py v0` from a terminal on your local machine while within the wrapper directory (`\amt-tutorial-wrapper`).
-6. Create a HIT using `python3 create_hit.py v0` from a terminal on your local machine while within the wrapper directory (`\amt-tutorial-wrapper`).
+6. Deploy the website by running `python deploy_website.py v0` from a terminal on your local machine while within the wrapper directory (`\amt-tutorial-wrapper`).
+6. Create a HIT using `python create_hit.py v0` from a terminal on your local machine while within the wrapper directory (`\amt-tutorial-wrapper`).
 7. If everything worked you should now be able to view the website at www.mozerlab.us/yourusername-amt-tutorial and accept a HIT on the sandboxed AMT worker website.
 
 ### Managing Participants
-When running an actual experiment, there are a number of things you may want to do.
+When running an actual experiment, there are a number of things you may want to do. The most important task will be viewing and approving assignments. To manage assignments, you can use the handy Boto3 python library (https://boto3.readthedocs.io/en/latest/). To get started you need to create a text file called "credentials" located in a hidden folder called "aws" in the root directory of your local machine, (e.g. ~/.aws/credentials).
 
-#### Add Assignments
-Once you have created a HIT you can add more assignments (up to nine). To do so, from the main requester page select "Manage", then "Manage HITs individually", find the HIT you want and click "Add assignments". You will only be able to add assignments if thre is still time remaining on the HIT.
+The credentials file will look like the following:
+```
+[default]
+aws_access_key_id = XXXX
+aws_secret_access_key = XXXX
+region=us-east-1
+```
 
-#### Approve assignments
-Once an assignment has been completed click "Manage", "Manage HITs individually", and then "Review assignments".
+Once you do that, you can now fire up an instance of python, and enter the following commands:
+```python
+>>>import boto3
+>>>client = boto3.client('mturk')
+```
+The `boto3.client` command automatically retrieves your AWS credentials from the credentials file.
+
+Now that you have an appropriate instantiated client object, you can request useful information. For example you could list assignments for HIT ABC123XYZ:
+```python
+>>>assignment_list = client.list_assignments_for_hit(HITId='ABC123XYZ')
+```
+
+The Boto3 API clearly list all the functions you might need as well as the format of the returned data. Two important commands are `client.create_additional_assignments_for_hit(...)` and `client.approve_assignment(...)`.
 
 #### Compensate Bad HITs
 Without fail a participant will eventually contact you regarding an issue with the HIT. Most often the issue is that they completed the experiment but AMT did not successfully receive the submission. This typically occurs because AMT will auto-log-out a worker or the worker submitted a HIT beyond the time allotted. In general, workers should always be compensated. It is very important to keep workers happy because there are a number of third-party websites that allow workers to rate requesters and word gets around. To compensate a worker, the best thing to do is create a dummy HIT that takes a few seconds to complete but pays the full amount of the original HIT. A dummy HIT can be created using AMT in-house survey template that asks a simple question (e.g., What's your favorite color?). When you create the dummy HIT, make sure that only workers with a custom qualification (that you create for this purpose) can see and accept the HIT. Then assign the qualification to the appropriate worker and revoke the qualification when they complete the dummy HIT.
